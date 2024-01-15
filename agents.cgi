@@ -5,19 +5,18 @@ import cgi
 form = cgi.FieldStorage()
 print("Content-type: text/html; charset=utf-8\n")
 
-print(form.getvalue("name"))
+with open('hosts.txt', 'r') as hosts:
+    hostList=hosts.read()
 
 html = """<!DOCTYPE html>
 <head>
-    <title>Mon programme</title>
+    <title>C2</title>
 </head>
 <body>
-    <form action="/cgi-bin/agents.cgi" method="post">
-        <input type="text" name="name" value="Votre nom" />
-        <input type="submit" name="send" value="Envoyer information au serveur">
-    </form> 
+"""+hostList+"""
 </body>
 </html>
 """
-
 print(html)
+
+# améliorable pour avoir des liens cliquables et sur plusieurs lignes
