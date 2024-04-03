@@ -27,6 +27,18 @@ def get_installed_applications():
     except subprocess.CalledProcessError as e:
         return f"Error: {e}"
 
+def get_domain():
+    if platform.system() == "Windows":
+        # Commande pour obtenir le nom du domaine sur Windows
+        command = "echo %userdomain%"
+        try:
+            domain = subprocess.check_output(command, shell=True, universal_newlines=True)
+            return domain.strip()
+        except subprocess.CalledProcessError as e:
+            return f"Error: {e}"
+    else:
+        return "Not applicable"
+
 def send_data_to_server(data):
     url = "http://localhost:8888/enroll.cgi"  # Endpoint pour l'enregistrement des agents sur le serveur local
     try:
@@ -41,10 +53,12 @@ def send_data_to_server(data):
 def main():
     os_version = get_os_version()
     installed_applications = get_installed_applications()
+    domain = get_domain()
 
     data = {
         "OS Version": os_version,
-        "Installed Applications": installed_applications
+        "Installed Applications": installed_applications,
+        "Domain": domain
     }
 
     send_data_to_server(data)
