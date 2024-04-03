@@ -13,5 +13,5 @@ handler = http.server.CGIHTTPRequestHandler
 httpd = server(server_address, handler)
 
 
-print("Serveur actif sur le port :", PORT)
+print("Contrôleur actif sur le port :", PORT)
 httpd.serve_forever()
