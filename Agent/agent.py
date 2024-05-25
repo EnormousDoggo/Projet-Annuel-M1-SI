@@ -1,26 +1,39 @@
-# importations et variables
-import http.server, requests
-server = http.server.HTTPServer    # classe du serveur HTTP
-handler = http.server.CGIHTTPRequestHandler    # classe du gestionnaire
-handler.cgi_directories = ["/cgi-bin"]
-PORT = 8000
-server_address = ("", PORT)
+import requests, re, time
 
-#TODO initialisation avec le contrôleur
+PORT = 12345
+run = True
+
+# connect to the controller
 print("Entrez l'ip et port du contrôleur :") 
 ControllerIP = input("IP -> ")
 ControllerPort = input("Port -> ")
 print("Entrez le nom du nouvel agent :")
 AgentName = input("Nom -> ")
-ControllerUrl = "http://"+ControllerIP+":"+ControllerPort+"/cgi-bin/enroll.cgi?name="+AgentName
-# envoi de la requête
-response = requests.get(ControllerUrl)
+ControllerUrl = "http://"+ControllerIP+":"+ControllerPort
+# send the request
+response = requests.get(ControllerUrl+"/enroll/"+AgentName)
 if response.status_code == 200 :
 	print("Connexion avec le contrôleur établie")
 else :
 	print("Echec de la connexion")
 
-# lancement du serveur
-print("Agent actif sur le port : ",PORT)
-httpd = server(server_address, handler)   # objet "serveur"
-httpd.serve_forever()
+# ask the controller for instructions every 2 seconds
+while run == True :
+    response = requests.get(ControllerUrl+"/instruction/"+AgentName)
+    if response.text == "quit":
+        print("fin du programme")
+        run = False
+    if response.text == "whoami":
+        # appeler le script 
+        # renvoyer le résultat au controleur
+        requests.post(ControllerUrl+"/")
+    if response.text == "list directories":
+        # appeler le script 
+        # renvoyer le résultat au controleur
+        requests.post(ControllerUrl+"/")
+    if response.text == "drop file ":
+        # appeler le script 
+        # renvoyer le résultat au controleur 
+        requests.post(ControllerUrl+"/")
+    time.sleep(2)
+        
