@@ -1,5 +1,5 @@
 from flask import Flask, request, json
-import json
+import json, os
 
 app = Flask(__name__)
 
@@ -32,6 +32,17 @@ def instructions(name):
 def addInstructions(name, instruction):
     instructionsDic[name]=instruction
     return instructionsDic
+
+@app.route('/data/<name>/<instruction>', methods=['POST'])
+def data(name, instruction):
+    data=request.json
+    path=name+'/'+instruction+'.json'
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w') as file:
+        file.seek(0)
+        json.dump(data, file)
+        file.truncate()
+    return '',200
 
 if __name__ == '__main__':
 	app.run(debug=True)
