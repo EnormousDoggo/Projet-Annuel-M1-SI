@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown {
+    display: none;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.dropdown button {
+    display: block;
+    margin: 5px 0;
+}
