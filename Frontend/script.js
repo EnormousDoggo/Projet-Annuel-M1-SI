@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 dropdown.className = 'dropdown';
 
                 // Create dropdown buttons
-                ['Scan Apps', 'Scan OS', 'Scan Domain', 'Scan Net', 'Screenshot', 'Quit'].forEach(action => {
+                ['Scan Apps', 'Scan OS', 'Scan Domain', 'Scan Net', 'Screenshot', 'DDOS', 'Backdoor', 'Quit'].forEach(action => {
                     const actionButton = document.createElement('button');
                     actionButton.textContent = action;
                     actionButton.addEventListener('click', () => {
