@@ -44,7 +44,6 @@ def addInstructions(name, instruction):
 
 @app.route('/data/<name>/<instruction>', methods=['POST'])
 def data(name, instruction):
-    # TODO traiter les différents formats : json, image, texte
     contentType = request.content_type
     if 'multipart/form-data' in contentType and 'file' in request.files:
         file = request.files['file']
@@ -73,5 +72,5 @@ def quit(name):
     return '',200
 
 if __name__ == '__main__':
-	app.run(host="127.0.0.1",debug=True, port=5000)
+	app.run(host="0.0.0.0",debug=True, port=5000)
  
