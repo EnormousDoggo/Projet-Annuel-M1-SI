@@ -1,6 +1,9 @@
 from io import BytesIO
-from PIL import ImageGrab
 import time
+try :
+    from PIL import ImageGrab
+except:
+    exit
 
 def capture():
     image = ImageGrab.grab()
